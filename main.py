@@ -50,6 +50,7 @@ class Game:
         self.boss = None
         self.level = 1 
         self.start_time = time.time() 
+        self.score = 0 
     
 
     def update(self): 
@@ -63,6 +64,7 @@ class Game:
         self.all_sprites.draw(self.screen)
         self.draw_text(self.screen, f"Leben: {str(self.player.lives)}", 30, 10, 10) 
         self.draw_text(self.screen, f"Zeit: {60 - self.elapsed_time}", 30, WIDTH - 150, 10) 
+        self.draw_text(self.screen, str(self.score), 30, WIDTH / 2, 10) 
         
         
     
@@ -76,6 +78,8 @@ class Game:
     def check_collisions(self):
         hits = pygame.sprite.groupcollide(self.enemies, self.bullets, True, True)
         for _ in hits: 
+            # -- update score 
+            self.score += 1
             enemy = Enemy(self.screen) 
             self.all_sprites.add(enemy) 
             self.enemies.add(enemy)
