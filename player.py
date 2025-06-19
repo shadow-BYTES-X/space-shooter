@@ -16,9 +16,11 @@ class Player(pygame.sprite.Sprite):
         self.game_sprites = game_sprites 
         self.game_bullets = game_bullets 
         self.bullet_type = bullet_type 
+        self.shoot_counter = 30 
         
     # -- maybe change controls to W A S D 
-    def update(self):
+    def update(self): 
+        self.shoot_counter += 1 
         keys = pygame.key.get_pressed() 
         if keys[pygame.K_LEFT] and self.rect.left > 0:
             self.rect.x -= self.speed
@@ -30,7 +32,10 @@ class Player(pygame.sprite.Sprite):
             self.rect.y += self.speed 
         
         if keys[pygame.K_SPACE]: 
-            self.shoot() 
+            if self.shoot_counter > 10:
+                self.shoot() 
+                self.shoot_counter = 0 
+            
     
     def shoot(self): 
         # -- type of bullet passed as a class 
