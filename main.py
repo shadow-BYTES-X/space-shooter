@@ -59,8 +59,8 @@ class Game:
         pygame.display.flip() 
 
     def draw(self):
-        self.screen.fill('black') 
-        self.screen.fill(self.BLACK)
+        #self.screen.fill('black') 
+        #self.screen.fill(self.BLACK)
         self.all_sprites.draw(self.screen)
         self.draw_text(self.screen, f"Leben: {str(self.player.lives)}", 30, 10, 10) 
         self.draw_text(self.screen, f"Zeit: {60 - self.elapsed_time}", 30, WIDTH - 150, 10) 
@@ -98,14 +98,23 @@ class Game:
         
         
 
-    # -- handle level progrss 
+    # -- handle level progress 
     def progress(self): 
+        if self.level == 1: 
+            background_image = pygame.image.load('./img/background-lvl-1.png') 
+            image = pygame.transform.scale(background_image, (WIDTH, HEIGHT * 3)) 
+            self.draw_map(image, 1) 
         self.elapsed_time = int(time.time() - self.start_time) 
         if self.level == 1 and self.elapsed_time >= 60:
             self.level = 2
             self.boss = Boss(self.all_sprites, self.boss_bullets, BossBullet, self.screen)  
             self.all_sprites.add(self.boss) 
             
+
+    def draw_map(self, img, scroll_speed):
+        # -- draw background image to the screen 
+        self.screen.blit(img, (0, 0)) 
+        # -- implement zooming into the image and move the "window" by scroll speed here 
 
     # -- start game processes and game loop 
     def run(self): 
