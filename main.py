@@ -60,8 +60,9 @@ class Game:
 
     def draw(self):
         #self.screen.fill('black') 
-        #self.screen.fill(self.BLACK)
-        self.all_sprites.draw(self.screen)
+        #self.screen.fill(self.BLACK) 
+        self.draw_map(self.background_image, 1) 
+        self.all_sprites.draw(self.screen) 
         self.draw_text(self.screen, f"Leben: {str(self.player.lives)}", 30, 10, 10) 
         self.draw_text(self.screen, f"Zeit: {60 - self.elapsed_time}", 30, WIDTH - 150, 10) 
         self.draw_text(self.screen, str(self.score), 30, WIDTH / 2, 10) 
@@ -101,9 +102,10 @@ class Game:
     # -- handle level progress 
     def progress(self): 
         if self.level == 1: 
-            background_image = pygame.image.load('./img/background-lvl-1.png') 
-            image = pygame.transform.scale(background_image, (WIDTH, HEIGHT * 3)) 
-            self.draw_map(image, 1) 
+            image = pygame.image.load('./img/background-lvl-1.png') 
+            self.background_image = pygame.transform.scale(image, (WIDTH, HEIGHT * 3)) 
+            
+            
         self.elapsed_time = int(time.time() - self.start_time) 
         if self.level == 1 and self.elapsed_time >= 60:
             self.level = 2
